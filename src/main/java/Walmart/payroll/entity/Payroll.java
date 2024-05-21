@@ -12,6 +12,7 @@ import java.util.Date;
 @Setter
 public class Payroll {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
