@@ -1,22 +1,38 @@
 package Walmart.payroll.controllers;
 
-import Walmart.payroll.entity.Employee;
-import Walmart.payroll.repositories.EmployeeRepository;
+import Walmart.payroll.DTO.EmployeeDTO;
+import Walmart.payroll.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class EmployeeController {
     @Autowired
-    EmployeeRepository employeeRepository;
+    private EmployeeService employeeService;
 
     @PostMapping("/addemp")
-    public void addEmployee(@RequestBody Employee employee){
-        employeeRepository.save(employee);
+    public String addEmployee(@RequestBody EmployeeDTO employee){
+       return employeeService.createEmployee(employee);
+
     }
 
     @GetMapping("getemp{id}")
-    public Employee getEmployee(@PathVariable int id){
-        return employeeRepository.findById(id).get();
+    public EmployeeDTO getEmployee(@PathVariable int id){
+        return employeeService.getEmployeeById(id);
+    }
+
+    @GetMapping("getemp")
+    public List<EmployeeDTO> getAllEmployees(){
+        return employeeService.getAllEmployees();
+    }
+    @PutMapping("update")
+    public String updateEmployee(@RequestBody EmployeeDTO employee){
+        return employeeService.updateEmployee(employee);
+    }
+    @DeleteMapping("delete{id}")
+    public String deleteEmployee(@PathVariable int id){
+        return employeeService.deleteEmployee(id);
     }
 }
